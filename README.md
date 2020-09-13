@@ -1,4 +1,4 @@
-# my_todo
+# My todo
 
 A new Flutter application.
 
