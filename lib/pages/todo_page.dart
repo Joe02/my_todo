@@ -180,7 +180,7 @@ class StatefulTodoPageState extends State<StatefulTodoPage> {
   }
 
   buildActivitiesList() {
-    return TodoList(_todoList);
+    return TodoList();
   }
 
   updateDatePicker(stateSetter, date) {

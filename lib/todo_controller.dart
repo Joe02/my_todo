@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class TodoController {
@@ -20,16 +19,16 @@ class TodoController {
     newActivity["finalDate"] = finalDate;
 
     _todoList.add(newActivity);
-    return _updateTodoListFile(_todoList);
+    return updateTodoListFile(_todoList);
   }
 
   void updateActivitiesList(value, index, _todoList) {
     _todoList[index]["status"] = value;
-    _updateTodoListFile(_todoList);
+    updateTodoListFile(_todoList);
   }
 
   ///Salva uma nova lista de afazeres e sobrescreve esta na lista antiga.
-  Future<File> _updateTodoListFile(_todoList) async {
+  Future<File> updateTodoListFile(_todoList) async {
     String todoList = json.encode(_todoList);
     final file = await _getFile();
     return file.writeAsString(todoList);
@@ -44,5 +43,16 @@ class TodoController {
       print("Erro ao ler lista de afazeres...");
       return null;
     }
+  }
+
+  itsCloseToLimit(String dateLimit) {
+     var now = DateTime.now();
+     if ( now == DateFormat.yMMMMd('pt_BR').parse(dateLimit)) {
+       return true;
+     } else if ( DateFormat.yMMMMd('pt_BR').parse(dateLimit).isBefore(now) ) {
+       return true;
+     } else {
+       return false;
+     }
   }
 }
