@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:my_todo/todo_controller.dart';
 
 class TodoList extends StatefulWidget {
+  final todoList;
+  TodoList(this.todoList);
+
   @override
   TodoListState createState() => TodoListState();
 }
@@ -18,12 +21,7 @@ class TodoListState extends State<TodoList> {
   @override
   void initState() {
     super.initState();
-    todoController.getTodoList().then((todoList) {
-      setState(() {
-        _todoList = json.decode(todoList);
-        print(_todoList);
-      });
-    });
+    _todoList = widget.todoList;
   }
 
   Future<Null> _refresh() async {

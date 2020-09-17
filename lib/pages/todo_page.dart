@@ -65,10 +65,8 @@ class StatefulTodoPageState extends State<StatefulTodoPage> {
             ),
             backgroundColor: Colors.white,
           ),
-          body: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[buildActivitiesList()],
-          )),
+          body: TodoList(_todoList),
+          ),
     );
   }
 
@@ -156,10 +154,18 @@ class StatefulTodoPageState extends State<StatefulTodoPage> {
                                     _todoTimeController.text,
                                     _todoList);
 
-                                _todoNameController.clear();
-                                _todoTimeController.clear();
+                                print(_todoList);
+
+                                todoController.getTodoList().then((todoList) {
+                                  setState(() {
+                                    _todoList = json.decode(todoList);
+                                  });
+                                });
+
                               });
                               Navigator.pop(context);
+                              _todoNameController.clear();
+                              _todoTimeController.clear();
                             },
                             child: Text(
                               "Adicionar",
@@ -177,10 +183,6 @@ class StatefulTodoPageState extends State<StatefulTodoPage> {
         ),
       ),
     );
-  }
-
-  buildActivitiesList() {
-    return TodoList();
   }
 
   updateDatePicker(stateSetter, date) {
